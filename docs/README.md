@@ -14,6 +14,7 @@ source env/bin/activate
 pip install -r requirements.txt # for a complete installation
 # python setup.py install => for release only build installs
 
+./scripts/generate_grpc_codes
 python v1/server.py
 python v1/client.py
 ```
