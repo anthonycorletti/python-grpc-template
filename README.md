@@ -1,4 +1,4 @@
-# python-grpc-boilerplate
+# python_grpc_boilerplate
 
 A simple boilerplate for a containerized, grpc, client-server system.
 

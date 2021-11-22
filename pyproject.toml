@@ -1,0 +1,38 @@
+[build-system]
+requires = ["flit_core >=2,<3"]
+build-backend = "flit_core.buildapi"
+
+[tool.flit.metadata]
+module = "python_grpc_boilerplate"
+author = "Anthony Corletti"
+author-email = "anthcor@gmail.com"
+home-page = "https://www.github.com/anthcor/python-grpc-boilerplate"
+description-file = "README.md"
+requires-python = ">=3.9.6"
+requires = [
+    "grpcio-tools==1.42.0",
+    "grpcio==1.42.0",
+]
+
+[tool.flit.metadata.urls]
+Documentation = "https://www.github.com/rungalileo/api/docs"
+
+[tool.flit.metadata.requires-extra]
+test = [
+    "pytest==6.2.5",
+    "coverage==6.1.1",
+    "pytest-cov==3.0.0"
+]
+dev = [
+    "mypy==0.910",
+    "mypy-protobuf==3.0.0",
+    "flake8==3.9.2",
+    "black==21.10b0",
+    "isort==5.9.3",
+    "autoflake==1.4",
+    "flake8-docstrings==1.6.0",
+    "types-protobuf==3.18.1"
+]
+
+[tool.isort]
+profile = "black"

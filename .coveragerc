@@ -1,0 +1,10 @@
+[run]
+source =
+    python_grpc_boilerplate
+    tests
+
+omit =
+    *__init__.py
+    alembic/*
+
+parallel = True

@@ -1,4 +1,0 @@
-#!/bin/sh
-
-docker build -t pygrpcboiler-server --file docker/v1/server/Dockerfile .
-docker build -t pygrpcboiler-client --file docker/v1/client/Dockerfile .
