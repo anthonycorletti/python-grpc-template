@@ -167,5 +167,5 @@ alembic/
 docs/
 .pytest_cache/
 scripts/
-protos/
+protobuf/
 .vscode
