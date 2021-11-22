@@ -1,7 +1,7 @@
 FROM python:3.9.6-slim
 
-WORKDIR /client
-COPY . /client
+WORKDIR /server
+COPY . /server
 
 RUN apt-get update -y \
     && apt-get install build-essential -y \

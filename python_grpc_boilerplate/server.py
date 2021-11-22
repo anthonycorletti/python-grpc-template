@@ -1,5 +1,6 @@
 import logging
 import os
+import socket
 from concurrent import futures
 
 import grpc
@@ -31,7 +32,7 @@ if __name__ == "__main__":
     os.environ["TZ"] = tz
     logging.basicConfig(
         format=(
-            f"[%(asctime)s.%(msecs)03d {tz}] "
+            f"[%(asctime)s.%(msecs)03d {tz}] [{socket.gethostname()}] "
             "[%(process)s] [%(pathname)s L%(lineno)d] "
             "[%(levelname)s] %(message)s"
         ),
