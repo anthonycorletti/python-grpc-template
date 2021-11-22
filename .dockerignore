@@ -169,3 +169,4 @@ docs/
 scripts/
 protobuf/
 .vscode
+Dockerfile*
