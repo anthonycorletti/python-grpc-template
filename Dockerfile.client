@@ -10,4 +10,4 @@ RUN apt-get update -y \
     && FLIT_ROOT_INSTALL=1 flit install --deps production \
     && rm -rf $(pip cache dir)
 
-CMD python python_grpc_boilerplate/client.py
+CMD python python_grpc_template/client.py

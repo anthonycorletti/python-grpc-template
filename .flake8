@@ -2,4 +2,4 @@
 max-line-length = 88
 extend-ignore = E203,D10,D415
 docstring-convention = google
-exclude = python_grpc_boilerplate/protobuf
+exclude = python_grpc_template/protobuf

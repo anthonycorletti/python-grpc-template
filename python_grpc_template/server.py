@@ -5,7 +5,7 @@ from concurrent import futures
 
 import grpc
 
-from python_grpc_boilerplate.protobuf import messenger_pb2, messenger_pb2_grpc
+from python_grpc_template.protobuf import messenger_pb2, messenger_pb2_grpc
 
 
 class Messenger(messenger_pb2_grpc.MessengerServicer):

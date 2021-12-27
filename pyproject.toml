@@ -2,22 +2,18 @@
 requires = ["flit_core >=2,<3"]
 build-backend = "flit_core.buildapi"
 
-[tool.flit.metadata]
-module = "python_grpc_boilerplate"
-author = "Anthony Corletti"
-author-email = "anthcor@gmail.com"
-home-page = "https://www.github.com/anthcor/python-grpc-boilerplate"
-description-file = "README.md"
+[project]
+name = "python_grpc_template"
+authors = [{name = "Anthony Corletti", email = "python_grpc_template@example.com"}]
+home-page = "https://www.github.com/anthcor/python-grpc-template"
+dynamic = ["version", "description"]
 requires-python = ">=3.9.6"
 requires = [
     "grpcio-tools==1.42.0",
     "grpcio==1.42.0",
 ]
 
-[tool.flit.metadata.urls]
-Documentation = "https://www.github.com/rungalileo/api/docs"
-
-[tool.flit.metadata.requires-extra]
+[project.optional-dependencies]
 test = [
     "pytest==6.2.5",
     "coverage==6.1.1",

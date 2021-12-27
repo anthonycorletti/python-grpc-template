@@ -1,6 +1,6 @@
 [run]
 source =
-    python_grpc_boilerplate
+    python_grpc_template
     tests
 
 omit =

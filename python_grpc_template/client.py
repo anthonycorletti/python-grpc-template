@@ -4,7 +4,7 @@ import socket
 
 import grpc
 
-from python_grpc_boilerplate.protobuf import messenger_pb2, messenger_pb2_grpc
+from python_grpc_template.protobuf import messenger_pb2, messenger_pb2_grpc
 
 
 def run() -> None:

@@ -1,4 +1,4 @@
-from python_grpc_boilerplate import __version__
+from python_grpc_template import __version__
 
 
 def test_version() -> None:

@@ -4,7 +4,7 @@ isort:skip_file
 """
 import abc
 import grpc
-from python_grpc_boilerplate.protobuf import messenger_pb2
+from python_grpc_template.protobuf import messenger_pb2
 
 class MessengerStub:
     def __init__(self, channel: grpc.Channel) -> None: ...

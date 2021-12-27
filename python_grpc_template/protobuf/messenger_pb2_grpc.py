@@ -2,7 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-from python_grpc_boilerplate.protobuf import messenger_pb2 as messenger__pb2
+from python_grpc_template.protobuf import messenger_pb2 as messenger__pb2
 
 
 class MessengerStub(object):
