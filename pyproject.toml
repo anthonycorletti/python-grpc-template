@@ -1,14 +1,14 @@
 [build-system]
-requires = ["flit_core >=2,<3"]
+requires = ["flit_core >=3.2,<4"]
 build-backend = "flit_core.buildapi"
 
 [project]
 name = "python_grpc_template"
 authors = [{name = "Anthony Corletti", email = "python_grpc_template@example.com"}]
-home-page = "https://www.github.com/anthcor/python-grpc-template"
+home-page = "https://www.github.com/anthonycorletti/python-grpc-template"
 dynamic = ["version", "description"]
 requires-python = ">=3.9.6"
-requires = [
+dependencies = [
     "grpcio-tools==1.42.0",
     "grpcio==1.42.0",
 ]
