@@ -4,7 +4,7 @@ import os
 import socket
 import sys
 from concurrent import futures
-from typing import Generator, List, Tuple
+from typing import Generator
 
 import grpc
 
@@ -12,17 +12,20 @@ from python_grpc_template.logger import logger
 from python_grpc_template.protobuf import messenger_pb2, messenger_pb2_grpc
 from python_grpc_template.types import GRPCServerOpts
 
+_PROCESS_COUNT = multiprocessing.cpu_count()
+_THREAD_CONCURRENCY = _PROCESS_COUNT
+
 
 def server_num_workers() -> int:
-    return int(os.getenv("NUM_WORKERS", 3))
+    return int(os.getenv("NUM_WORKERS", _PROCESS_COUNT))
 
 
 def _server_port() -> str:
-    return os.getenv("GRPC_SERVER_PORT", "50052")
+    return os.getenv("GRPC_SERVER_PORT", "50051")
 
 
 def _server_host() -> str:
-    return os.getenv("GRPC_SERVER_HOST", "localhost")
+    return os.getenv("GRPC_SERVER_HOST", "[::]")
 
 
 class Messenger(messenger_pb2_grpc.MessengerServicer):
@@ -33,11 +36,12 @@ class Messenger(messenger_pb2_grpc.MessengerServicer):
         return messenger_pb2.Response(message="Hello, %s!" % request.name)
 
 
-def _run_server(listen_addr: str, server_opts: List[Tuple]) -> None:
-    logger.info("Server started. Waiting for requests.")
+def _run_server(listen_addr: str) -> None:
+    logger.info("Server-worker started. Waiting for requests.")
+    options = GRPCServerOpts()
     server = grpc.server(
-        futures.ThreadPoolExecutor(max_workers=1),
-        options=server_opts,
+        thread_pool=futures.ThreadPoolExecutor(max_workers=_THREAD_CONCURRENCY),
+        options=options.to_list(),
     )
     messenger_pb2_grpc.add_MessengerServicer_to_server(Messenger(), server)
     server.add_insecure_port(listen_addr)
@@ -66,26 +70,17 @@ def main() -> None:
     )
     server_host = _server_host()
     server_port = _server_port()
-    server_opts = GRPCServerOpts()
     with _reserve_port(port=int(server_port)) as port:
         listen_addr = f"{server_host}:{port}"
         logger.info(f"Binding to {listen_addr}")
         sys.stdout.flush()
         workers = []
         for _ in range(num_workers):
-            worker = multiprocessing.Process(
-                target=_run_server,
-                kwargs={
-                    "listen_addr": listen_addr,
-                    "server_opts": server_opts.to_list(),
-                },
-            )
+            worker = multiprocessing.Process(target=_run_server, args=(listen_addr,))
             worker.start()
             workers.append(worker)
-        print(workers)
         for worker in workers:
             worker.join()
-        logger.info("here")
 
 
 if __name__ == "__main__":
