@@ -19,5 +19,5 @@ def run() -> None:
 
 
 if __name__ == "__main__":
-    os.environ["TZ"] = "UTC"
-    run()
+    os.environ["TZ"] = "UTC"  # pragma: no cover
+    run()  # pragma: no cover

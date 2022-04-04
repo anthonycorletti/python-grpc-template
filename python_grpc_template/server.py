@@ -37,7 +37,6 @@ class Messenger(messenger_pb2_grpc.MessengerServicer):
 
 
 def _run_server(listen_addr: str) -> None:
-    logger.info("Server-worker started. Waiting for requests.")
     options = GRPCServerOpts()
     server = grpc.server(
         thread_pool=futures.ThreadPoolExecutor(max_workers=_THREAD_CONCURRENCY),
@@ -45,7 +44,9 @@ def _run_server(listen_addr: str) -> None:
     )
     messenger_pb2_grpc.add_MessengerServicer_to_server(Messenger(), server)
     server.add_insecure_port(listen_addr)
+    logger.info("Starting worker.")
     server.start()
+    logger.info("Worker started. Waiting for requests.")
     server.wait_for_termination()
 
 
@@ -54,7 +55,7 @@ def _reserve_port(port: int) -> Generator:
     sock = socket.socket(socket.AF_INET6, socket.SOCK_STREAM)
     sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
     if sock.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT) == 0:
-        raise RuntimeError("Failed to set SO_REUSEPORT.")
+        raise RuntimeError("Failed to set SO_REUSEPORT.")  # pragma: no cover
     sock.bind(("", port))
     try:
         yield sock.getsockname()[1]
@@ -84,5 +85,5 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    os.environ["TZ"] = "UTC"
-    main()
+    os.environ["TZ"] = "UTC"  # pragma: no cover
+    main()  # pragma: no cover
