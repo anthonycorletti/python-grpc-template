@@ -3,7 +3,9 @@ import multiprocessing
 import os
 import socket
 import sys
+import time
 from concurrent import futures
+from concurrent.futures import ThreadPoolExecutor
 from typing import Generator
 
 import grpc
@@ -14,6 +16,7 @@ from python_grpc_template.types import GRPCServerOpts
 
 _PROCESS_COUNT = multiprocessing.cpu_count()
 _THREAD_CONCURRENCY = _PROCESS_COUNT
+_ASYNC_MESSAGE_HANDLER = ThreadPoolExecutor(max_workers=1)
 
 
 def server_num_workers() -> int:
@@ -25,7 +28,14 @@ def _server_port() -> str:
 
 
 def _server_host() -> str:
-    return os.getenv("GRPC_SERVER_HOST", "[::]")
+    return os.getenv("GRPC_SERVER_HOST", "localhost")
+
+
+def _do_async_stuff(message: str) -> None:
+    logger.info(f"_do_async_stuff: we have a new message: {message}")
+    logger.info("_do_async_stuff: doing lots of stuff with it ...")
+    time.sleep(5)
+    logger.info("_do_async_stuff: done!")
 
 
 class Messenger(messenger_pb2_grpc.MessengerServicer):
@@ -36,6 +46,19 @@ class Messenger(messenger_pb2_grpc.MessengerServicer):
         return messenger_pb2.Response(message="Hello, %s!" % request.name)
 
 
+class AsyncMessenger(messenger_pb2_grpc.AsyncMessengerServicer):
+    def SendMessage(
+        self, request: messenger_pb2.Request, context: grpc.RpcContext
+    ) -> messenger_pb2.Response:
+        message = (
+            f"Thanks for your message {request.name}! "
+            "Now we're going to run lots of code for you!"
+        )
+        _ASYNC_MESSAGE_HANDLER.submit(_do_async_stuff, message)
+        logger.info(message)
+        return messenger_pb2.Response(message=message)
+
+
 def _run_server(listen_addr: str) -> None:
     options = GRPCServerOpts()
     server = grpc.server(
@@ -43,6 +66,7 @@ def _run_server(listen_addr: str) -> None:
         options=options.to_list(),
     )
     messenger_pb2_grpc.add_MessengerServicer_to_server(Messenger(), server)
+    messenger_pb2_grpc.add_AsyncMessengerServicer_to_server(AsyncMessenger(), server)
     server.add_insecure_port(listen_addr)
     logger.info("Starting worker.")
     server.start()

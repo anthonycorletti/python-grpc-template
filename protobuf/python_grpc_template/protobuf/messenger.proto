@@ -6,6 +6,10 @@ service Messenger {
   rpc SendMessage (Request) returns (Response) {}
 }
 
+service AsyncMessenger {
+  rpc SendMessage (Request) returns (Response) {}
+}
+
 message Request {
   string name = 1;
 }

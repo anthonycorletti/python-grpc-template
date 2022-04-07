@@ -2,7 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-from python_grpc_template.protobuf import messenger_pb2 as messenger__pb2
+from python_grpc_template.protobuf import messenger_pb2 as python__grpc__template_dot_protobuf_dot_messenger__pb2
 
 
 class MessengerStub(object):
@@ -15,10 +15,10 @@ class MessengerStub(object):
             channel: A grpc.Channel.
         """
         self.SendMessage = channel.unary_unary(
-            "/messenger.Messenger/SendMessage",
-            request_serializer=messenger__pb2.Request.SerializeToString,
-            response_deserializer=messenger__pb2.Response.FromString,
-        )
+                '/messenger.Messenger/SendMessage',
+                request_serializer=python__grpc__template_dot_protobuf_dot_messenger__pb2.Request.SerializeToString,
+                response_deserializer=python__grpc__template_dot_protobuf_dot_messenger__pb2.Response.FromString,
+                )
 
 
 class MessengerServicer(object):
@@ -27,53 +27,101 @@ class MessengerServicer(object):
     def SendMessage(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details("Method not implemented!")
-        raise NotImplementedError("Method not implemented!")
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
 
 
 def add_MessengerServicer_to_server(servicer, server):
     rpc_method_handlers = {
-        "SendMessage": grpc.unary_unary_rpc_method_handler(
-            servicer.SendMessage,
-            request_deserializer=messenger__pb2.Request.FromString,
-            response_serializer=messenger__pb2.Response.SerializeToString,
-        ),
+            'SendMessage': grpc.unary_unary_rpc_method_handler(
+                    servicer.SendMessage,
+                    request_deserializer=python__grpc__template_dot_protobuf_dot_messenger__pb2.Request.FromString,
+                    response_serializer=python__grpc__template_dot_protobuf_dot_messenger__pb2.Response.SerializeToString,
+            ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-        "messenger.Messenger", rpc_method_handlers
-    )
+            'messenger.Messenger', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
 
 
-# This class is part of an EXPERIMENTAL API.
+ # This class is part of an EXPERIMENTAL API.
 class Messenger(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
-    def SendMessage(
-        request,
-        target,
-        options=(),
-        channel_credentials=None,
-        call_credentials=None,
-        insecure=False,
-        compression=None,
-        wait_for_ready=None,
-        timeout=None,
-        metadata=None,
-    ):
-        return grpc.experimental.unary_unary(
-            request,
+    def SendMessage(request,
             target,
-            "/messenger.Messenger/SendMessage",
-            messenger__pb2.Request.SerializeToString,
-            messenger__pb2.Response.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-        )
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/messenger.Messenger/SendMessage',
+            python__grpc__template_dot_protobuf_dot_messenger__pb2.Request.SerializeToString,
+            python__grpc__template_dot_protobuf_dot_messenger__pb2.Response.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+
+class AsyncMessengerStub(object):
+    """Missing associated documentation comment in .proto file."""
+
+    def __init__(self, channel):
+        """Constructor.
+
+        Args:
+            channel: A grpc.Channel.
+        """
+        self.SendMessage = channel.unary_unary(
+                '/messenger.AsyncMessenger/SendMessage',
+                request_serializer=python__grpc__template_dot_protobuf_dot_messenger__pb2.Request.SerializeToString,
+                response_deserializer=python__grpc__template_dot_protobuf_dot_messenger__pb2.Response.FromString,
+                )
+
+
+class AsyncMessengerServicer(object):
+    """Missing associated documentation comment in .proto file."""
+
+    def SendMessage(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+
+def add_AsyncMessengerServicer_to_server(servicer, server):
+    rpc_method_handlers = {
+            'SendMessage': grpc.unary_unary_rpc_method_handler(
+                    servicer.SendMessage,
+                    request_deserializer=python__grpc__template_dot_protobuf_dot_messenger__pb2.Request.FromString,
+                    response_serializer=python__grpc__template_dot_protobuf_dot_messenger__pb2.Response.SerializeToString,
+            ),
+    }
+    generic_handler = grpc.method_handlers_generic_handler(
+            'messenger.AsyncMessenger', rpc_method_handlers)
+    server.add_generic_rpc_handlers((generic_handler,))
+
+
+ # This class is part of an EXPERIMENTAL API.
+class AsyncMessenger(object):
+    """Missing associated documentation comment in .proto file."""
+
+    @staticmethod
+    def SendMessage(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/messenger.AsyncMessenger/SendMessage',
+            python__grpc__template_dot_protobuf_dot_messenger__pb2.Request.SerializeToString,
+            python__grpc__template_dot_protobuf_dot_messenger__pb2.Response.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

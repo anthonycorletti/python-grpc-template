@@ -4,22 +4,38 @@ isort:skip_file
 """
 import abc
 import grpc
-from python_grpc_template.protobuf import messenger_pb2
+import python_grpc_template.protobuf.messenger_pb2
 
 class MessengerStub:
     def __init__(self, channel: grpc.Channel) -> None: ...
     SendMessage: grpc.UnaryUnaryMultiCallable[
-        messenger_pb2.Request, messenger_pb2.Response
-    ] = ...
+        python_grpc_template.protobuf.messenger_pb2.Request,
+        python_grpc_template.protobuf.messenger_pb2.Response]
+
 
 class MessengerServicer(metaclass=abc.ABCMeta):
     @abc.abstractmethod
-    def SendMessage(
-        self,
-        request: messenger_pb2.Request,
+    def SendMessage(self,
+        request: python_grpc_template.protobuf.messenger_pb2.Request,
         context: grpc.ServicerContext,
-    ) -> messenger_pb2.Response: ...
+    ) -> python_grpc_template.protobuf.messenger_pb2.Response: ...
 
-def add_MessengerServicer_to_server(
-    servicer: MessengerServicer, server: grpc.Server
-) -> None: ...
+
+def add_MessengerServicer_to_server(servicer: MessengerServicer, server: grpc.Server) -> None: ...
+
+class AsyncMessengerStub:
+    def __init__(self, channel: grpc.Channel) -> None: ...
+    SendMessage: grpc.UnaryUnaryMultiCallable[
+        python_grpc_template.protobuf.messenger_pb2.Request,
+        python_grpc_template.protobuf.messenger_pb2.Response]
+
+
+class AsyncMessengerServicer(metaclass=abc.ABCMeta):
+    @abc.abstractmethod
+    def SendMessage(self,
+        request: python_grpc_template.protobuf.messenger_pb2.Request,
+        context: grpc.ServicerContext,
+    ) -> python_grpc_template.protobuf.messenger_pb2.Response: ...
+
+
+def add_AsyncMessengerServicer_to_server(servicer: AsyncMessengerServicer, server: grpc.Server) -> None: ...
