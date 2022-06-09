@@ -28,7 +28,8 @@ dev = [
     "isort>=5.9.3,<6.0.0",
     "autoflake>=1.4,<2.0",
     "flake8-docstrings>=1.6.0,<2.0.0",
-    "types-protobuf>=3.18.1,<4.0.0"
+    "types-protobuf>=3.18.1,<4.0.0",
+    "pre-commit >=2.0.0,<3.0.0",
 ]
 
 [tool.isort]
